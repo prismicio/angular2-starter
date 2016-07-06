@@ -4,7 +4,6 @@
 **/node_modules/
 target/
 tmp/
-typings/
 
 
 #---------------------------------
@@ -22,6 +21,8 @@ typings/
 #---------------------------------
 src/**/*.js
 src/**/*.map
+typings/index.d.ts
+typings/globals
 
 
 #---------------------------------
