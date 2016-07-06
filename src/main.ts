@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Use the endpoint of your repository
-const ENDPOINT = 'https://your-repo-name.prismic.io/api';
+const ENDPOINT = 'https://testerw.prismic.io/api';
 // Specify an access token if your API is set to private
 const ACCESS_TOKEN = null;
 

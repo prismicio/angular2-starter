@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'home',
   template: `
     <div *ngIf="document">
-      <h2>{{document.slug}}</h2>
+      <h2 [attr.data-wio-id]=document.id>{{document.slug}}</h2>
       <div class="document-body" [innerHtml]=document.asHtml(linkResolver)></div>
     </div>
     <div *ngIf="loaded && !document">
