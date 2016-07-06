@@ -21,8 +21,8 @@ tmp/
 #---------------------------------
 src/**/*.js
 src/**/*.map
-typings/index.d.ts
-typings/globals
+typings/*
+!typings/prismic.io.d.ts
 
 
 #---------------------------------

@@ -11,7 +11,6 @@ Getting Started
 #### Quick Start
 ```shell
 $ npm install
-$ npm run typings
 $ npm start
 ```
 
