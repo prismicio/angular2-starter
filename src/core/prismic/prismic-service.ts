@@ -19,4 +19,9 @@ export class PrismicService {
     return Prismic.api(this.endpoint);
   }
 
+  // Customize this to match your routing pattern
+  linkResolver(doc: any) {
+    return `/${doc.type}/${doc.id}`;
+  }
+
 }
