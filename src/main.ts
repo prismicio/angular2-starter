@@ -20,11 +20,22 @@ if (process.env.NODE_ENV === 'production') {
   enableProdMode();
 }
 
+// Use the endpoint of your repository
+const ENDPOINT = 'https://your-repo-name.prismic.io/api';
+// Specify an access token if your API is set to private
+const ACCESS_TOKEN = null;
+
+// Customize this to match your routing pattern
+function linkResolver(doc: any) {
+  return `/${doc.type}/${doc.id}`;
+}
 
 bootstrap(App, [
   API_PROVIDERS,
   HTTP_PROVIDERS,
   PRISMIC_PROVIDERS,
   ROUTER_PROVIDERS,
-  provide('PrismicEndpoint', {useValue: 'https://your-repo-name.prismic.io/api'})
+  provide('PrismicEndpoint', {useValue: ENDPOINT}),
+  provide('PrismicAccessToken', {useValue: ACCESS_TOKEN}),
+  provide('LinkResolver', {useValue: linkResolver})
 ]).catch((error: Error) => console.error(error));

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { PrismicService } from 'src/core/prismic';
 import { Router, ActivatedRoute }       from '@angular/router';
 
@@ -20,19 +20,17 @@ export class DocumentPage implements OnInit {
   private sub: any;
   private document: any;
   private loaded: boolean = false;
-  private linkResolver: {(doc: any): string}
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private prismic: PrismicService
+    private prismic: PrismicService,
+    @Inject('LinkResolver') private linkResolver: {(doc: any): string}
   ) {}
 
   ngOnInit() {
-    this.linkResolver = this.prismic.linkResolver;
     this.sub = this.route.params.subscribe(params => {
       const id = params['id'];
-      console.log("Look for id = ", id);
       this.prismic.api().then((api) => api.getByID(id)).then((document) => {
         this.document = document;
         this.loaded = true;

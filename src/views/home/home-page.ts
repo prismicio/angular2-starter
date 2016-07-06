@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { PrismicService } from 'src/core/prismic';
 
 
@@ -14,10 +14,11 @@ import { PrismicService } from 'src/core/prismic';
   `
 })
 export class HomePage {
-  linkResolver: {(doc: any): string};
   documents: Array<any>;
-  constructor(public prismicService: PrismicService) {
-    this.linkResolver = prismicService.linkResolver;
+  constructor(
+    public prismicService: PrismicService,
+    @Inject('LinkResolver') private linkResolver: {(doc: any): string}
+  ) {
     prismicService.api().then((api) => api.query('')).then((response) => {
       this.documents = response.results;
     });
