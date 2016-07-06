@@ -3,9 +3,11 @@ import { provideRouter, ROUTER_DIRECTIVES, RouterConfig }  from '@angular/router
 
 import { HomePage } from './home';
 import { DocumentPage } from './documents';
+import { PreviewComponent } from './previews';
 
 const routes: RouterConfig = [
   {path: '', component: HomePage},
+  {path: 'preview', component: PreviewComponent},
   {path: ':type/:id', component: DocumentPage}
 ];
 

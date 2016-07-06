@@ -16,7 +16,7 @@ import { PrismicService } from 'src/core/prismic';
 export class HomePage {
   documents: Array<any>;
   constructor(
-    public prismicService: PrismicService,
+    private prismicService: PrismicService,
     @Inject('LinkResolver') private linkResolver: {(doc: any): string}
   ) {
     prismicService.api().then((api) => api.query('')).then((response) => {
