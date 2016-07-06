@@ -2,12 +2,10 @@ import { PLATFORM_DIRECTIVES } from '@angular/core';
 import { provideRouter, ROUTER_DIRECTIVES, RouterConfig }  from '@angular/router';
 
 import { HomePage } from './home';
-import { ProjectsPage } from './projects';
 
 
 const routes: RouterConfig = [
-  {path: '', component: HomePage},
-  {path: 'projects', component: ProjectsPage}
+  {path: '', component: HomePage}
 ];
 
 

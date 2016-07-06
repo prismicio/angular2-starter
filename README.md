@@ -1,24 +1,6 @@
-[![Build Status](https://travis-ci.org/r-park/angular2-webpack-seed.svg?branch=master)](https://travis-ci.org/r-park/angular2-webpack-seed)
+# Angular2 Starter
 
-
-# Angular2 Webpack Seed
-
-- Angular2
-- Jasmine
-- Karma
-- SASS
-- Typescript
-- Webpack
-- Webpack Development Server
-
-
-#### Features
-- Inline external HTML templates into typescript component files (optional)
-- Inline and autoprefix external SCSS files into typescript component files (optional)
-- Inject style tags into `index.html` (optional)
-- Inject script tags into `index.html`
-- Bundle and minify release builds
-
+Angular2 and prismic.io, sitting in a tree.
 
 Getting Started
 ---------------
