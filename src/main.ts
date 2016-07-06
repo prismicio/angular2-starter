@@ -26,5 +26,5 @@ bootstrap(App, [
   HTTP_PROVIDERS,
   PRISMIC_PROVIDERS,
   ROUTER_PROVIDERS,
-  provide('PrismicEndpoint', {useValue: 'https://blogtemplate.prismic.io/api'})
+  provide('PrismicEndpoint', {useValue: 'https://your-repo-name.prismic.io/api'})
 ]).catch((error: Error) => console.error(error));
