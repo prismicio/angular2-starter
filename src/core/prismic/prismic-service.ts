@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 
 import { Prismic } from 'prismic.io';
+import * as PrismicToolbar from 'prismic-toolbar';
 
 const PREVIEW_EXPIRES: number = 30*60*1000; // 30 minutes
 
@@ -26,9 +27,18 @@ export class PrismicService {
     return this.api().then((api) => {
       return api.previewSession(token, this.linkResolver, '/').then((url: string) => {
         this.setRef(token);
+        PrismicToolbar.toolbar();
         return url;
       });
     });
+  }
+
+  editLink(docId: string): string {
+    return PrismicToolbar.editLink(this.endpoint, docId);
+  }
+
+  editIcon(): string {
+    return PrismicToolbar.editIcon;
   }
 
 }

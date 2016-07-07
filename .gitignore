@@ -23,6 +23,7 @@ src/**/*.js
 src/**/*.map
 typings/*
 !typings/prismic.io.d.ts
+!typings/prismic-toolbar.d.ts
 
 
 #---------------------------------

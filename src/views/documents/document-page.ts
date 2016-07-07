@@ -1,13 +1,20 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { PrismicService } from 'src/core/prismic';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PrismicEditLink } from './prismic-edit-link';
 
 
 @Component({
   selector: 'home',
+  directives: [
+    PrismicEditLink
+  ],
   template: `
     <div *ngIf="document">
-      <h2 [attr.data-wio-id]=document.id>{{document.slug}}</h2>
+      <h2 [attr.data-wio-id]=document.id>
+        {{document.slug}}
+        <prismic-edit-link [docId]=document.id></prismic-edit-link>
+      </h2>
       <div class="document-body" [innerHtml]=document.asHtml(linkResolver)></div>
     </div>
     <div *ngIf="loaded && !document">
