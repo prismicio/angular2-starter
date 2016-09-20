@@ -1,0 +1,6 @@
+<h2>Home</h2>
+<ul>
+  <li class="document" *ngFor="let document of documents">
+    <a [routerLink]="[linkResolver(document)]">{{document.slug}}</a>
+  </li>
+</ul>

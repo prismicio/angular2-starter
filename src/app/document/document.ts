@@ -1,21 +1,13 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { PrismicService } from 'src/core/prismic';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { PrismicService } from '../prismic';
 
 @Component({
-  selector: 'home',
-  template: `
-    <div *ngIf="document">
-      <h2 [attr.data-wio-id]=document.id>{{document.slug}}</h2>
-      <div class="document-body" [innerHtml]=document.asHtml(linkResolver)></div>
-    </div>
-    <div *ngIf="loaded && !document">
-      <h2>Not found!</h2>
-    </div>
-  `
+  selector: 'document',
+  styleUrls: ['./document.css'],
+  templateUrl: './document.html'
 })
-export class DocumentPage implements OnInit {
+export class Document implements OnInit {
   @Input() id: string;
   private sub: any;
   private document: any;

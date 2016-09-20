@@ -1,0 +1,6 @@
+<div *ngIf="document">
+  <div class="document-body" [innerHtml]=document.asHtml(linkResolver)></div>
+</div>
+<div *ngIf="loaded && !document">
+  <h2>Not found!</h2>
+</div>

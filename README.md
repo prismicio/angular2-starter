@@ -1,32 +1,14 @@
-# Angular2 Starter
+## angular2-seed
 
-Angular2 and prismic.io, sitting in a tree.
-
-Getting Started
----------------
-
-#### Prerequisites
-- `node >=5.12`
-
-#### Quick Start
-```shell
-$ npm install
-$ npm start
-```
+A simple starter project demonstrating the basic concepts of Angular 2.
 
 
-Usage
------
-
-|Script|Description|
-|---|---|
-|`npm start`|Start webpack development server @ `localhost:3000`|
-|`npm run build`|Lint, test, and build the application to `./target`|
-|`npm run lint`|Lint `.ts` and `.js` files|
-|`npm run lint:js`|Lint `.js` files with eslint|
-|`npm run lint:ts`|Lint `.ts` files with tslint|
-|`npm run server`|Start express server @ `localhost:3000` to serve built artifacts from `./target` (must run `npm run build` first)|
-|`npm test`|Run unit tests with Karma and Jasmine|
-|`npm run test:watch`|Run unit tests with Karma and Jasmine; watch for changes to re-run tests|
-|`npm run typings`|Install ambient typings|
-|`npm version`|Bump package.json version, generate CHANGELOG.md, git commit and tag (see [npm version](https://docs.npmjs.com/cli/version))|
+### Usage
+- Clone or fork this repository
+- Make sure you have [node.js](https://nodejs.org/) installed version 5+
+- Make sure you have NPM installed version 3+
+- `WINDOWS ONLY` run `npm install -g webpack webpack-dev-server typescript` to install global dependencies
+- run `npm install` to install dependencies
+- run `npm start` to fire up dev server
+- open browser to [`http://localhost:3000`](http://localhost:3000)
+- if you want to use other port, open `package.json` file, then change port in `--port 3000` script

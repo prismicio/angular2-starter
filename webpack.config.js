@@ -1,169 +1,68 @@
-const autoprefixer = require('autoprefixer');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
-const WebpackMd5Hash = require('webpack-md5-hash');
+var webpack = require('webpack');
+var path = require('path');
 
 
-//=========================================================
-//  ENVIRONMENT VARS
-//---------------------------------------------------------
-const NODE_ENV = process.env.NODE_ENV;
+// Webpack Config
+var webpackConfig = {
+  entry: {
+    'polyfills': './src/polyfills.browser.ts',
+    'vendor':    './src/vendor.browser.ts',
+    'main':       './src/main.browser.ts',
+  },
 
-const ENV_DEVELOPMENT = NODE_ENV === 'development';
-const ENV_PRODUCTION = NODE_ENV === 'production';
-const ENV_TEST = NODE_ENV === 'test';
+  output: {
+    path: './dist',
+  },
 
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 3000;
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
+  ],
 
+  module: {
+    loaders: [
+      {test: /\.json$/, loader: 'json'},
+      // .ts files for TypeScript
+      { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
+      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'] },
+      { test: /\.html$/, loader: 'raw-loader' }
+    ]
+  }
 
-//=========================================================
-//  CONFIG
-//---------------------------------------------------------
-const config = {};
-module.exports = config;
-
-
-config.resolve = {
-  extensions: ['', '.ts', '.js'],
-  modulesDirectories: ['node_modules'],
-  root: path.resolve('.')
-};
-
-config.module = {
-  loaders: [
-    {test: /\.json$/, loader: 'json'},
-    {test: /\.ts$/, loader: 'ts', exclude: /node_modules/},
-    {test: /\.html$/, loader: 'raw'},
-    {test: /\.scss$/, loader: 'raw!postcss!sass', exclude: path.resolve('src/views/common/styles'), include: path.resolve('src/views')}
-  ]
-};
-
-config.plugins = [
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
-  })
-];
-
-config.postcss = [
-  autoprefixer({ browsers: ['last 3 versions'] })
-];
-
-config.sassLoader = {
-  outputStyle: 'compressed',
-  precision: 10,
-  sourceComments: false
 };
 
 
-//=====================================
-//  DEVELOPMENT or PRODUCTION
-//-------------------------------------
-if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
-  config.entry = {
-    main: ['./src/main.ts'],
-    polyfills: './src/polyfills.ts',
-    vendor: './src/vendor.ts'
-  };
+// Our Webpack Defaults
+var defaultConfig = {
+  devtool: 'cheap-module-source-map',
+  cache: true,
+  debug: true,
+  output: {
+    filename: '[name].bundle.js',
+    sourceMapFilename: '[name].map',
+    chunkFilename: '[id].chunk.js'
+  },
 
-  config.output = {
-    filename: '[name].js',
-    path: path.resolve('./target'),
-    publicPath: '/'
-  };
+  resolve: {
+    modulesDirectories: ['node_modules'],
+    root: [ path.join(__dirname, 'src') ],
+    extensions: ['', '.ts', '.js', '.json']
+  },
 
-  config.plugins.push(
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'polyfills'],
-      minChunks: Infinity
-    }),
-    new CopyWebpackPlugin([
-      {from: './src/assets', to: 'assets'}
-    ]),
-    new HtmlWebpackPlugin({
-      chunkSortMode: 'dependency',
-      filename: 'index.html',
-      hash: false,
-      inject: 'body',
-      template: './src/index.html'
-    })
-  );
-}
-
-
-//=====================================
-//  DEVELOPMENT
-//-------------------------------------
-if (ENV_DEVELOPMENT) {
-  config.devtool = 'cheap-module-source-map';
-
-  config.entry.main.unshift(`webpack-dev-server/client?http://${HOST}:${PORT}`);
-
-  config.module.loaders.push(
-    {test: /\.scss$/, loader: 'style!css!postcss!sass', include: path.resolve('src/views/common/styles')}
-  );
-
-  config.devServer = {
-    contentBase: './src',
+  devServer: {
     historyApiFallback: true,
-    host: HOST,
-    outputPath: config.output.path,
-    port: PORT,
-    publicPath: config.output.publicPath,
-    stats: {
-      cached: true,
-      cachedAssets: true,
-      chunks: true,
-      chunkModules: false,
-      colors: true,
-      hash: false,
-      reasons: true,
-      timings: true,
-      version: false
-    }
-  };
-}
+    watchOptions: { aggregateTimeout: 300, poll: 1000 }
+  },
 
+  node: {
+    global: 1,
+    crypto: 'empty',
+    module: 0,
+    Buffer: 0,
+    clearImmediate: 0,
+    setImmediate: 0
+  }
+};
 
-//=====================================
-//  PRODUCTION
-//-------------------------------------
-if (ENV_PRODUCTION) {
-  config.devtool = 'source-map';
-
-  config.output.filename = '[name].[chunkhash].js';
-
-  config.module.loaders.push(
-    {test: /\.scss$/, loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass'), include: path.resolve('src/views/common/styles')}
-  );
-
-  config.plugins.push(
-    new WebpackMd5Hash(),
-    new ExtractTextPlugin('styles.[contenthash].css'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
-      compress: {
-        dead_code: true, // eslint-disable-line camelcase
-        screw_ie8: true, // eslint-disable-line camelcase
-        unused: true,
-        warnings: false
-      }
-    })
-  );
-}
-
-
-//=====================================
-//  TEST
-//-------------------------------------
-if (ENV_TEST) {
-  config.devtool = 'inline-source-map';
-
-  config.module.loaders.push(
-    {test: /\.scss$/, loader: 'style!css!postcss!sass', include: path.resolve('src/views/common/styles')}
-  );
-}
+var webpackMerge = require('webpack-merge');
+module.exports = webpackMerge(defaultConfig, webpackConfig);
