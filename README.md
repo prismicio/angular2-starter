@@ -1,7 +1,6 @@
-## angular2-seed
+## Angular 2 Starter
 
-A simple starter project demonstrating the basic concepts of Angular 2.
-
+Angular2 and prismic.io, sitting in a tree.
 
 ### Usage
 - Clone or fork this repository
