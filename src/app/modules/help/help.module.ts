@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; //required for ngIf templating property
+import { CommonModule } from '@angular/common'; // required for ngIf templating property
 import { HelpComponent } from './help.component';
-import { PrismicService } from '../../services/prismic';
+import { PrismicService } from '../../prismic/prismic.service';
 
 @NgModule({
   declarations: [HelpComponent],

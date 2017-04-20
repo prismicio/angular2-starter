@@ -1,4 +1,4 @@
-import { PrismicService } from './services/prismic';
+import { PrismicService } from './prismic/prismic.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
