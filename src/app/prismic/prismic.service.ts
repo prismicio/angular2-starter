@@ -2,6 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import Prismic from 'prismic.io';
+
+import { PrismicContext } from './prismic-context';
 import { CONFIG } from '../../prismic-configuration';
 
 @Injectable()
@@ -11,15 +13,14 @@ export class PrismicService {
 
   buildContext() {
     const options = {};
-    if(CONFIG.accessToken)
     return Prismic.api(CONFIG.apiEndpoint, {accessToken: CONFIG.accessToken})
-      .then(api => {
+      .then((api) => {
         return {
           api,
           endpoint: CONFIG.apiEndpoint,
           accessToken: CONFIG.accessToken,
           toolbar: this.refreshToolbar
-        }
+        } as PrismicContext;
       })
       .catch(e => console.log(`Error during connection to your Prismic API: ${e}`));
   }

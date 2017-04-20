@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { PrismicService } from '../../services/prismic';
+import { PrismicService } from '../../prismic/prismic.service';
 
 @Component({
-  selector: 'help',
+  selector: 'app-help',
   templateUrl: './help.component.html',
   styleUrls: ['./help.component.css']
 })

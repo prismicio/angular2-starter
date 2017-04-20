@@ -1,0 +1,15 @@
+.page-content {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.page-content img {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.page-content .title {
+  font-size: 34px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

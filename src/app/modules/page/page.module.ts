@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'; // required for ngIf templating property
-import { HelpComponent } from './help.component';
+import { PageComponent } from './page.component';
 import { PrismicService } from '../../prismic/prismic.service';
 
 @NgModule({
-  declarations: [HelpComponent],
+  declarations: [PageComponent],
   imports: [CommonModule],
-  exports: [HelpComponent],
+  exports: [PageComponent],
   providers: [PrismicService]
 })
-export class HelpModule { }
+export class PageModule {}

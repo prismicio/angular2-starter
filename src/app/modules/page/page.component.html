@@ -1,0 +1,9 @@
+<div *ngIf="!pageContent">
+  <h2>Loading your page content</h2>
+</div>
+
+<div class="page-content" *ngIf="pageContent">
+  <img src="{{pageContent.getImage('page.image').url}}" />
+  <div class="title" [innerHTML]="pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)"></div>
+  <div [innerHTML]="pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)"></div>
+</div>
