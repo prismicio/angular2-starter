@@ -9,4 +9,4 @@ import { PrismicService } from '../../prismic/prismic.service';
   exports: [PreviewComponent],
   providers: [PrismicService, CookieService]
 })
-export class HelpModule {}
+export class PreviewModule {}

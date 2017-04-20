@@ -8,7 +8,7 @@ export interface PrismicConfiguration {
 
 export const CONFIG: PrismicConfiguration = {
   apiEndpoint: 'https://your-repo-name.prismic.io/api',
-  linkResolver() {
+  linkResolver(doc) {
     return '/';
   }
 };

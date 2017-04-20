@@ -6,7 +6,8 @@ import { PrismicService } from '../../prismic/prismic.service';
 const PREVIEW_EXPIRES = 30 * 60 * 1000; // 30 minutes
 
 @Component({
-  selector: 'app-preview'
+  selector: 'app-preview',
+  template: ''
 })
 export class PreviewComponent implements OnInit, OnDestroy {
   private routeStream: any;
@@ -19,7 +20,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.routeStream = this.route.params.subscribe(params => {
+    this.routeStream = this.route.queryParams.subscribe(params => {
       const token = params['token'];
       this.prismic.preview(token).then(previewData => {
         this.cookieService.put(previewData.name, previewData.token, PREVIEW_EXPIRES);

@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 
 import { HelpModule } from './modules/help/help.module';
+import { PreviewModule } from './modules/preview/preview.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HelpModule } from './modules/help/help.module';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    HelpModule
+    HelpModule,
+    PreviewModule
   ],
   providers: [PrismicService],
   bootstrap: [AppComponent]

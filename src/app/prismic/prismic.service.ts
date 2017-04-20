@@ -18,7 +18,9 @@ export class PrismicService {
         return {
           api,
           endpoint: CONFIG.apiEndpoint,
-          accessToken: CONFIG.accessToken
+          accessToken: CONFIG.accessToken,
+          linkResolver: CONFIG.linkResolver,
+          toolbar: this.toolbar,
         } as PrismicContext;
       })
       .catch(e => console.log(`Error during connection to your Prismic API: ${e}`));

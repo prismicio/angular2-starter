@@ -4,6 +4,6 @@ import { PreviewComponent } from './modules/preview/preview.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/help' },
-  { path: 'help', component: HelpComponent },
+  { path: 'help', component: HelpComponent},
   { path: 'preview', component: PreviewComponent }
 ];
