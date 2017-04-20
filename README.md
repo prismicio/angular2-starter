@@ -1,6 +1,8 @@
 # Angular2Starter
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+Install angular-cli:
+```npm install -g @angular/cli```
 
 ## Development server
 

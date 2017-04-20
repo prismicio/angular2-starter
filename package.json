@@ -19,8 +19,10 @@
     "@angular/http": "^4.0.0",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
+    "@angular/router": "~4.0.0",
     "core-js": "^2.4.1",
+    "prismic-toolbar": "~0.0.1",
+    "prismic.io": "~3.5.5",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },

@@ -1,0 +1,53 @@
+<div id="prismic-help">
+  <header>
+    <nav>
+      <a href="{{repositoryInfos.isConfigured ? repositoryInfos.url : '#'}}"><strong>{{repositoryInfos.isConfigured ? repositoryInfos.name : 'Configure a repository'}}</strong></a>
+      <a href="https://prismic.io/docs" class="doc">Documentation<img src="../../assets/images/open.svg" alt=""/></a>
+    </nav>
+    <div class="wrapper"><img src="../../assets/images/rocket.svg" alt=""/>
+      <h1>High five, you deserve it!</h1>
+      <p>Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.</p>
+    </div>
+    <div class="hero-curve"></div>
+    <div class="flip-flap">
+      <div class="flipper">
+        <div class="guide">
+          <ul>
+            <li class="done"><span>1</span>Bootstrap your project</li>
+            <li><a href="#query"><span>2</span>Query the API<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a href="#done"><span>3</span>Fill a template<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+          </ul>
+        </div>
+        <div class="gif"></div>
+      </div>
+    </div>
+  </header>
+  <section>
+    <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to /help.</p>
+    <h2>{{repositoryInfos.isConfigured ? 'Two' : 'Three'}} more steps:</h2>
+
+    <div *ngIf="!repositoryInfos.isConfigured">
+      <h3 id="config"><span>1</span>Bootstrap your project</h3>
+      <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
+      <h4>Add the repository URL to your configuration</h4>
+      <p>Replace the repository url in your config file with your-repo-name.prismic.io</p>
+      <div class="source-code">
+        <pre><code>
+        </code></pre>
+      </div>
+    </div>
+
+    <h3 id="query"><span>2</span>Create a route and retrieve content</h3>
+    <p>To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.<br/>In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of custom type "page" by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.</p>
+    <div class="source-code">
+      <pre><code>
+      </code></pre>
+    </div>
+    <h3 id="done"><span>3</span>Fill a template</h3>
+    <p>Now all that's left to be done is insert your content into the template.<br/>You can get the content using the <code class="tag">pageContent</code> object we defined above. Each content field is accessed using the custom type <code class="tag">API-ID</code> and the field key defined in the custom type (for example <code class="tag">page.image</code>).</p>
+    <div class="source-code">
+      <pre><code>
+      </code></pre>
+    </div>
+  </section>
+</div>
