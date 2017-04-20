@@ -45,13 +45,10 @@ export class PrismicService {
   }
 
   toolbar(api) {
-    console.log('toolbar')
     const maybeCurrentExperiment = api.currentExperiment();
     if (maybeCurrentExperiment) {
       PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
     }
-    console.log(PrismicToolbar.setup)
-
     PrismicToolbar.setup(CONFIG.apiEndpoint);
   }
 
