@@ -10,6 +10,7 @@ import { routes } from './routes';
 
 import { HelpModule } from './modules/help/help.module';
 import { PageModule } from './modules/page/page.module';
+import { PreviewModule } from './modules/preview/preview.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PageModule } from './modules/page/page.module';
     HttpModule,
     RouterModule.forRoot(routes),
     HelpModule,
-    PageModule
+    PageModule,
+    PreviewModule
   ],
   providers: [PrismicService],
   bootstrap: [AppComponent]

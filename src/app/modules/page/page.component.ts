@@ -27,6 +27,10 @@ export class PageComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngDoCheck() {
+    if(this.ctx) this.prismic.toolbar(this.ctx.api);
+  }
+
   ngOnDestroy() {
     this.routeStream.unsubscribe();
   }
