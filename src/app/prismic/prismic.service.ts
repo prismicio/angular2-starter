@@ -1,4 +1,4 @@
-// import PrismicToolbar from 'prismic-toolbar';
+import PrismicToolbar from 'prismic-toolbar';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import Prismic from 'prismic.io';
@@ -18,8 +18,7 @@ export class PrismicService {
         return {
           api,
           endpoint: CONFIG.apiEndpoint,
-          accessToken: CONFIG.accessToken,
-          toolbar: this.refreshToolbar
+          accessToken: CONFIG.accessToken
         } as PrismicContext;
       })
       .catch(e => console.log(`Error during connection to your Prismic API: ${e}`));
@@ -43,13 +42,20 @@ export class PrismicService {
     return { url, name, isConfigured };
   }
 
-  private refreshToolbar(api) {
-    // return () => {
-    //   const maybeCurrentExperiment = api.currentExperiment();
-    //   if (maybeCurrentExperiment) {
-    //     PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
-    //   }
-    //   PrismicToolbar.setup(CONFIG.apiEndpoint);
-    // }
+  toolbar(api) {
+    const maybeCurrentExperiment = api.currentExperiment();
+    if (maybeCurrentExperiment) {
+      PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+    }
+    PrismicToolbar.setup(CONFIG.apiEndpoint);
+  }
+
+  preview(token) {
+    return this.buildContext()
+    .then(ctx => {
+      return ctx.api.previewSession(token, ctx.linkResolver, '/').then((url) => {
+        return { name: Prismic.previewCookie, token, url };
+      });
+    });
   }
 }
