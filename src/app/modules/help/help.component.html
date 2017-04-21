@@ -33,21 +33,165 @@
       <p>Replace the repository url in your config file with your-repo-name.prismic.io</p>
       <div class="source-code">
         <pre><code>
+          // In prismic-configuration.ts
+          apiEndpoint: 'http://your-repo-name.prismic.io/api'
         </code></pre>
       </div>
     </div>
 
     <h3 id="query"><span>2</span>Create a route and retrieve content</h3>
-    <p>To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.<br/>In the following example we set a <code class="tag">/page/:uid</code> URL to fetch content of custom type "page" by its UID. The route then calls the <code class="tag">page</code> template and passes it the retrieved content.</p>
+
+    <h4>Create a new component</h4>
+    <p>
+      First, you need to create a new folder <code class="tag">page</code> in <code class="tag">./src/app/modules</code><br />
+      Then create a new file <code class="tag">page.component.ts</code>
+    </p>
     <div class="source-code">
       <pre><code>
+import {{ '{' }} Component, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
+import {{ '{' }} Context } from '../../prismic/context';
+import {{ '{' }} PrismicService } from '../../prismic/prismic.service';
+import {{ '{' }} ActivatedRoute } from '@angular/router';
+import {{ '{' }} Subscription, Observable } from 'rxjs';
+
+@Component({{ '{' }}
+  selector: 'app-page',
+  templateUrl: './page.component.html',
+  styleUrls: ['./page.component.css']
+})
+export class PageComponent implements OnInit, OnDestroy {{ '{' }}
+  private routeStream: Subscription;
+
+  ctx ?: Context;
+  pageContent ?: any;
+
+  constructor(private prismic: PrismicService, private route: ActivatedRoute) {{ '{' }}}
+
+  ngOnInit() {{ '{' }}
+    this.routeStream = this.route.params
+    .map(params => params['uid'])
+    .flatMap(uid => Observable.fromPromise(this.prismic.buildContext()).map(ctx => [uid, ctx]))
+    .subscribe(([uid, ctx]) => {{ '{' }}
+      this.ctx = ctx;
+      this.fetchPage(uid);
+    });
+  }
+
+  ngDoCheck() {{ '{' }}
+    if(this.ctx) this.prismic.toolbar(this.ctx.api);
+  }
+
+  ngOnDestroy() {{ '{' }}
+    this.routeStream.unsubscribe();
+  }
+
+  fetchPage(pageUID) {{ '{' }}
+    this.ctx.api.getByUID('page', pageUID, {{ '{' }}})
+    .then(data => this.pageContent = data)
+    .catch(e => console.log(e));
+  }
+}
       </code></pre>
     </div>
-    <h3 id="done"><span>3</span>Fill a template</h3>
-    <p>Now all that's left to be done is insert your content into the template.<br/>You can get the content using the <code class="tag">pageContent</code> object we defined above. Each content field is accessed using the custom type <code class="tag">API-ID</code> and the field key defined in the custom type (for example <code class="tag">page.image</code>).</p>
+
+    <h4>Create a new module to expose your component</h4>
+    <p>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.module.ts</code>
+    </p>
     <div class="source-code">
       <pre><code>
+import {{ '{' }} NgModule } from '@angular/core';
+import {{ '{' }} CommonModule } from '@angular/common'; // required for ngIf templating property
+import {{ '{' }} PageComponent } from './page.component';
+import {{ '{' }} PrismicService } from '../../prismic/prismic.service';
+
+@NgModule({{ '{' }}
+  declarations: [PageComponent],
+  imports: [CommonModule],
+  exports: [PageComponent],
+  providers: [PrismicService]
+})
+export class PageModule {{ '{' }}}
       </code></pre>
     </div>
+
+    <h4>Create a new template for the page component</h4>
+    <p>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">app.component.html</code>
+    </p>
+    <div class="source-code">
+      <pre><code>
+&lt;div *ngIf=&quot;!pageContent&quot;&gt;
+  &lt;h2&gt;Loading your page content&lt;/h2&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;page-content&quot; *ngIf=&quot;pageContent&quot; [attr.data-wio-id]=&quot;pageContent.id&quot;&gt;
+  &lt;img src=&quot;{{ '{' }}{{ '{' }}pageContent.getImage('page.image').url}}&quot; /&gt;
+  &lt;div class=&quot;title&quot; [innerHTML]=&quot;pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)&quot;&gt;&lt;/div&gt;
+  &lt;div [innerHTML]=&quot;pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+      </code></pre>
+    </div>
+
+    <h4>Create a new stylesheet for the page component</h4>
+    <p>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">app.component.css</code>
+    </p>
+    <div class="source-code">
+      <pre><code>
+.page-content {{ '{' }}
+  text-align: center;
+  margin-top: 50px;
+}
+
+.page-content img {{ '{' }}
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.page-content .title {{ '{' }}
+  font-size: 34px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+      </code></pre>
+    </div>
+
+    <h4>Link that Page module to your Application</h4>
+    <p>
+      In the file <code class="tag">app.module.ts</code>, import your component in your application.
+    </p>
+    <div class="source-code">
+      <pre><code>
+import {{ '{' }} PageModule } from './modules/page/page.module';
+
+//in imports, add this module
+PageModule
+      </code></pre>
+    </div>
+    
+    <h4>Add the new route</h4>
+    <p>
+      In the file <code class="tag">routes.ts</code>, add the new route and link it to the Page component.
+    </p>
+    <div class="source-code">
+      <pre><code>
+{{ '{' }} path: 'page/:uid', component: PageComponent},
+      </code></pre>
+    </div>
+    
+    <h4>Configure your link resolver to make it work for previews and DocumentLink</h4>
+    <p>
+      In the file <code class="tag">prismic-configuration.ts</code>, configure the new route based on the custom type by simply adding this code at the begining of the function linkResolver:
+    </p>
+    <div class="source-code">
+      <pre><code>
+if(doc.type === 'page') return `page/${{ '{' }}doc.uid}`;
+      </code></pre>
+    </div>
+
+    <h3>Full working example</h3>
+    <p>If you want a full working example to build your new module, just go there : https://github.com/arnaudlewis/angular2-starter/tree/winner</p>
+
   </section>
 </div>
