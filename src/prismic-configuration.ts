@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export interface PrismicConfiguration {
-  apiEndpoint: String;
-  accessToken?: String;
+  apiEndpoint: string;
+  accessToken?: string;
   linkResolver: Function;
 };
 
