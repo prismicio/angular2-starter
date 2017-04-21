@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
-import { PrismicContext } from '../../prismic/prismic-context';
+import { Context } from '../../prismic/context';
 import { PrismicService } from '../../prismic/prismic.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-page',
@@ -9,21 +10,20 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./page.component.css']
 })
 export class PageComponent implements OnInit, OnDestroy {
-  private routeStream: any;
+  private routeStream: Subscription;
 
-  ctx ?: PrismicContext;
+  ctx ?: Context;
   pageContent ?: any;
 
   constructor(private prismic: PrismicService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.routeStream = this.route.params.subscribe(params => {
-      const uid = params['uid'];
-      this.prismic.buildContext()
-      .then((ctx: PrismicContext) => {
-        this.ctx = ctx;
-        this.fetchPage(uid);
-      });
+    this.routeStream = this.route.params
+    .map(params => params['uid'])
+    .flatMap(uid => Observable.fromPromise(this.prismic.buildContext()).map(ctx => [uid, ctx]))
+    .subscribe(([uid, ctx]) => {
+      this.ctx = ctx;
+      this.fetchPage(uid);
     });
   }
 
