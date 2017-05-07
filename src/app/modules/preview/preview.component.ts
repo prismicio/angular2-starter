@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService } from 'ngx-cookie';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { PrismicService } from '../../prismic/prismic.service';
 import { Preview } from '../../prismic/preview';
