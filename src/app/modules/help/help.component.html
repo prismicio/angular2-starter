@@ -14,8 +14,8 @@
         <div class="guide">
           <ul>
             <li class="done"><span>1</span>Bootstrap your project</li>
-            <li><a href="#query"><span>2</span>Query the API<img src="../../assets/images/arrow.svg" alt=""/></a></li>
-            <li><a href="#done"><span>3</span>Fill a template<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a (click)="goToAnchor('query')"><span>2</span>Create a module and query the API<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a (click)="goToAnchor('working-example')"><span>3</span>Discover a working example<img src="../../assets/images/arrow.svg" alt=""/></a></li>
           </ul>
         </div>
         <div class="gif"></div>
@@ -190,7 +190,7 @@ if(doc.type === 'page') return `page/${{ '{' }}doc.uid}`;
       </code></pre>
     </div>
 
-    <h3>Full working example</h3>
+    <h3 id="working-example"><span>3</span>Full working example</h3>
     <p>If you want a full working example to build your new module, just go there : https://github.com/arnaudlewis/angular2-starter/tree/winner</p>
 
   </section>

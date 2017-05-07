@@ -13,4 +13,8 @@ export class HelpComponent {
     prismic.validateOnboarding();
     this.repositoryInfos = prismic.getRepositoryInfos();
   }
+
+  goToAnchor(anchor: string): void {
+    window.location.hash = anchor;
+  }
 }
