@@ -117,7 +117,7 @@ export class PageModule {{ '{' }}}
 
     <h4>Create a new template for the page component</h4>
     <p>
-      In the <code class="tag">page</code> folder, create a new file <code class="tag">app.component.html</code>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.component.html</code>
     </p>
     <div class="source-code">
       <pre><code>
@@ -135,7 +135,7 @@ export class PageModule {{ '{' }}}
 
     <h4>Create a new stylesheet for the page component</h4>
     <p>
-      In the <code class="tag">page</code> folder, create a new file <code class="tag">app.component.css</code>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.component.css</code>
     </p>
     <div class="source-code">
       <pre><code>
@@ -169,17 +169,19 @@ import {{ '{' }} PageModule } from './modules/page/page.module';
 PageModule
       </code></pre>
     </div>
-    
+
     <h4>Add the new route</h4>
     <p>
       In the file <code class="tag">routes.ts</code>, add the new route and link it to the Page component.
     </p>
     <div class="source-code">
       <pre><code>
+import {{ '{' }} PageComponent } from './modules/page/page.component';
+
 {{ '{' }} path: 'page/:uid', component: PageComponent},
       </code></pre>
     </div>
-    
+
     <h4>Configure your link resolver to make it work for previews and DocumentLink</h4>
     <p>
       In the file <code class="tag">prismic-configuration.ts</code>, configure the new route based on the custom type by simply adding this code at the begining of the function linkResolver:
