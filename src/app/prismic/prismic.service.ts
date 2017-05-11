@@ -48,9 +48,9 @@ export class PrismicService {
   toolbar(api) {
     const maybeCurrentExperiment = api.currentExperiment();
     if (maybeCurrentExperiment) {
-      PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+      //PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
     }
-    PrismicToolbar.setup(CONFIG.apiEndpoint);
+    //PrismicToolbar.setup(CONFIG.apiEndpoint);
   }
 
   preview(token) {
