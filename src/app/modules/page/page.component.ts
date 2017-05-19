@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, SimpleChanges } from '@angular/core';
 import { Context } from '../../prismic/context';
 import { PrismicService } from '../../prismic/prismic.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,11 +9,12 @@ import { Subscription, Observable } from 'rxjs';
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.css']
 })
-export class PageComponent implements OnInit, OnDestroy {
+export class PageComponent implements OnInit, AfterViewChecked, OnDestroy {
   private routeStream: Subscription;
 
   ctx ?: Context;
   pageContent ?: any;
+  toolbar ?: boolean = false;
 
   constructor(private prismic: PrismicService, private route: ActivatedRoute) {}
 
@@ -27,17 +28,23 @@ export class PageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngDoCheck() {
-    if(this.ctx) this.prismic.toolbar(this.ctx.api);
-  }
-
   ngOnDestroy() {
     this.routeStream.unsubscribe();
   }
 
+  ngAfterViewChecked() {
+    if(this.ctx && (!this.toolbar)) {
+      this.prismic.toolbar(this.ctx.api);
+      this.toolbar = true;
+    }
+  }
+
   fetchPage(pageUID) {
     this.ctx.api.getByUID('page', pageUID, {})
-    .then(data => this.pageContent = data)
+    .then(data => {
+      this.toolbar = false;
+      this.pageContent = data;
+    })
     .catch(e => console.log(e));
   }
 }
