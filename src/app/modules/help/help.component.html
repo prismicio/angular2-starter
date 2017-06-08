@@ -129,8 +129,8 @@ export class PageModule {{ '{' }}}
 
 &lt;div class=&quot;page-content&quot; *ngIf=&quot;pageContent&quot; [attr.data-wio-id]=&quot;pageContent.id&quot;&gt;
   &lt;img src=&quot;{{ '{' }}{{ '{' }}pageContent.data.image.url}}&quot; /&gt;
-  &lt;div class=&quot;title&quot; [innerHTML]=&quot;PrismicDOM.asHtml(pageContent.data.title, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
-  &lt;div [innerHTML]=&quot;PrismicDOM.asHtml(pageContent.data.description, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;title&quot; [innerHTML]=&quot;PrismicDOM.RichText.asHtml(pageContent.data.title, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
+  &lt;div [innerHTML]=&quot;PrismicDOM.RichText.asHtml(pageContent.data.description, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
       </code></pre>
     </div>
