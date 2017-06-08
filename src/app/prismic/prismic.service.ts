@@ -1,7 +1,7 @@
 import PrismicToolbar from 'prismic-toolbar';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import Prismic from 'prismic.io';
+import Prismic from 'prismic-javascript';
 
 import { Context } from './context';
 import { Preview } from './preview';
@@ -39,7 +39,7 @@ export class PrismicService {
   }
 
   getRepositoryInfos() {
-    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api$/;
+    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api(\/v2)?$/;
     const [_, url, name] = CONFIG.apiEndpoint.match(repoRegexp);
     const isConfigured = name !== 'your-repo-name';
     return { url, name, isConfigured };
