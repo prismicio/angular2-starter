@@ -3,6 +3,7 @@ import { Context } from '../../prismic/context';
 import { PrismicService } from '../../prismic/prismic.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
+import PrismicDOM from 'prismic-dom';
 
 @Component({
   selector: 'app-page',
@@ -11,6 +12,7 @@ import { Subscription, Observable } from 'rxjs';
 })
 export class PageComponent implements OnInit, AfterViewChecked, OnDestroy {
   private routeStream: Subscription;
+  PrismicDOM: Object = PrismicDOM;
 
   ctx ?: Context;
   pageContent ?: any;

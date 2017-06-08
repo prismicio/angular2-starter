@@ -3,7 +3,7 @@
 </div>
 
 <div class="page-content" *ngIf="pageContent" [attr.data-wio-id]="pageContent.id">
-  <img src="{{pageContent.getImage('page.image').url}}" />
-  <div class="title" [innerHTML]="pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)"></div>
-  <div [innerHTML]="pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)"></div>
+  <img src="{{pageContent.data.image.url}}" />
+  <div class="title" [innerHTML]="PrismicDOM.RichText.asHtml(pageContent.data.title, ctx.linkResolver)"></div>
+  <div [innerHTML]="PrismicDOM.RichText.asHtml(pageContent.data.description, ctx.linkResolver)"></div>
 </div>
