@@ -80,24 +80,20 @@ export class PageComponent implements OnInit, OnDestroy {{ '{' }}
     });
   }
 
-  ngDoCheck() {{ '{' }}
-    if(this.ctx) this.prismic.toolbar(this.ctx.api);
-  }
-
   ngOnDestroy() {{ '{' }}
     this.routeStream.unsubscribe();
   }
 
-  ngAfterViewChecked() {
-    if(this.ctx && (!this.toolbar)) {
+  ngAfterViewChecked() {{ '{' }}
+    if(this.ctx && !this.toolbar) {{ '{' }}
       this.prismic.toolbar(this.ctx.api);
       this.toolbar = true;
     }
   }
 
-  fetchPage(pageUID) {
-    this.ctx.api.getByUID('page', pageUID, {})
-    .then(data => {
+  fetchPage(pageUID) {{ '{' }}
+    this.ctx.api.getByUID('page', pageUID, {{ '{' }}})
+    .then(data => {{ '{' }}
       this.toolbar = false;
       this.pageContent = data;
     })
