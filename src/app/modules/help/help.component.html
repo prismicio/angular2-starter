@@ -34,7 +34,7 @@
       <div class="source-code">
         <pre><code>
 // In prismic-configuration.ts
-apiEndpoint: 'http://your-repo-name.prismic.io/api'
+apiEndpoint: 'http://your-repo-name.prismic.io/api/v2'
         </code></pre>
       </div>
     </div>
@@ -53,6 +53,7 @@ import {{ '{' }} Context } from '../../prismic/context';
 import {{ '{' }} PrismicService } from '../../prismic/prismic.service';
 import {{ '{' }} ActivatedRoute } from '@angular/router';
 import {{ '{' }} Subscription, Observable } from 'rxjs';
+import PrismicDOM from 'prismic-dom';
 
 @Component({{ '{' }}
   selector: 'app-page',
@@ -61,6 +62,7 @@ import {{ '{' }} Subscription, Observable } from 'rxjs';
 })
 export class PageComponent implements OnInit, OnDestroy {{ '{' }}
   private routeStream: Subscription;
+  PrismicDOM: Object = PrismicDOM;
 
   ctx ?: Context;
   pageContent ?: any;
@@ -137,9 +139,9 @@ export class PageModule {{ '{' }}}
 &lt;/div&gt;
 
 &lt;div class=&quot;page-content&quot; *ngIf=&quot;pageContent&quot; [attr.data-wio-id]=&quot;pageContent.id&quot;&gt;
-  &lt;img src=&quot;{{ '{' }}{{ '{' }}pageContent.getImage('page.image').url}}&quot; /&gt;
-  &lt;div class=&quot;title&quot; [innerHTML]=&quot;pageContent.getStructuredText('page.title').asHtml(ctx.linkResolver)&quot;&gt;&lt;/div&gt;
-  &lt;div [innerHTML]=&quot;pageContent.getStructuredText('page.description').asHtml(ctx.linkResolver)&quot;&gt;&lt;/div&gt;
+  &lt;img src=&quot;{{ '{' }}{{ '{' }}pageContent.data.image.url}}&quot; /&gt;
+  &lt;div class=&quot;title&quot; [innerHTML]=&quot;PrismicDOM.RichText.asHtml(pageContent.data.title, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
+  &lt;div [innerHTML]=&quot;PrismicDOM.RichText.asHtml(pageContent.data.description, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
       </code></pre>
     </div>
