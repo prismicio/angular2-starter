@@ -64,6 +64,7 @@ export class PageComponent implements OnInit, OnDestroy {{ '{' }}
 
   ctx ?: Context;
   pageContent ?: any;
+  toolbar ?: boolean = false;
 
   constructor(private prismic: PrismicService, private route: ActivatedRoute) {{ '{' }}}
 
@@ -85,9 +86,19 @@ export class PageComponent implements OnInit, OnDestroy {{ '{' }}
     this.routeStream.unsubscribe();
   }
 
-  fetchPage(pageUID) {{ '{' }}
-    this.ctx.api.getByUID('page', pageUID, {{ '{' }}})
-    .then(data => this.pageContent = data)
+  ngAfterViewChecked() {
+    if(this.ctx && (!this.toolbar)) {
+      this.prismic.toolbar(this.ctx.api);
+      this.toolbar = true;
+    }
+  }
+
+  fetchPage(pageUID) {
+    this.ctx.api.getByUID('page', pageUID, {})
+    .then(data => {
+      this.toolbar = false;
+      this.pageContent = data;
+    })
     .catch(e => console.log(e));
   }
 }
