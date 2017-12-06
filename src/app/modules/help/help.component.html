@@ -1,21 +1,23 @@
 <div id="prismic-help">
   <header>
-    <nav>
-      <a href="{{repositoryInfos.isConfigured ? repositoryInfos.url : '#'}}"><strong>{{repositoryInfos.isConfigured ? repositoryInfos.name : 'Configure a repository'}}</strong></a>
+    <nav [ngSwitch]="repositoryInfos.isConfigured">
+      <a *ngSwitchCase="true" href="{{ repositoryInfos.repoURL }}" target="_blank" rel="noopener"><strong>{{ repositoryInfos.name }}</strong></a>
+      <a *ngSwitchDefault href="help#config"><strong>Configure a repository</strong></a>
       <a href="https://prismic.io/docs" class="doc">Documentation<img src="../../assets/images/open.svg" alt=""/></a>
     </nav>
     <div class="wrapper"><img src="../../assets/images/rocket.svg" alt=""/>
       <h1>High five, you deserve it!</h1>
-      <p>Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.</p>
+      <p>Grab a well deserved cup of coffee, you're {{repositoryInfos.isConfigured ? 'two' : 'three'}} steps away from creating a page with dynamic content.</p>
     </div>
     <div class="hero-curve"></div>
     <div class="flip-flap">
       <div class="flipper">
         <div class="guide">
-          <ul>
-            <li class="done"><span>1</span>Bootstrap your project</li>
-            <li><a (click)="goToAnchor('query')"><span>2</span>Create a module and query the API<img src="../../assets/images/arrow.svg" alt=""/></a></li>
-            <li><a (click)="goToAnchor('working-example')"><span>3</span>Discover a working example<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+          <ul [ngSwitch]="repositoryInfos.isConfigured">
+            <li *ngSwitchCase="true" class="done"><span>1</span>Bootstrap your project</li>
+            <li *ngSwitchDefault><a href="help#config"><span>1</span>Bootstrap your project<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a href="help#query"><span>2</span>Create a module and query the API<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a href="help#working-example"><span>3</span>Discover a working example<img src="../../assets/images/arrow.svg" alt=""/></a></li>
           </ul>
         </div>
         <div class="gif"></div>
@@ -23,19 +25,17 @@
     </div>
   </header>
   <section>
-    <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to /help.</p>
+    <p>This is a help page included in your project. It has a few useful links and example code snippets to help you getting started. You can access this any time by pointing your browser to localhost:4200/help.</p>
     <h2>{{repositoryInfos.isConfigured ? 'Two' : 'Three'}} more steps:</h2>
 
     <div *ngIf="!repositoryInfos.isConfigured">
       <h3 id="config"><span>1</span>Bootstrap your project</h3>
-      <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
+      <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
       <h4>Add the repository URL to your configuration</h4>
-      <p>Replace the repository url in your config file with your-repo-name.prismic.io</p>
+      <p>Replace the repository url in your config file with <code class="tag">your-repo-name</code>.prismic.io</p>
       <div class="source-code">
-        <pre><code>
-// In prismic-configuration.ts
-apiEndpoint: 'http://your-repo-name.prismic.io/api/v2'
-        </code></pre>
+        <pre><code class="ts">// In src/prismic-configuration.ts
+apiEndpoint: 'http://your-repo-name.prismic.io/api/v2'</code></pre>
       </div>
     </div>
 
@@ -43,11 +43,12 @@ apiEndpoint: 'http://your-repo-name.prismic.io/api/v2'
 
     <h4>Create a new component</h4>
     <p>
-      First, you need to create a new folder <code class="tag">page</code> in <code class="tag">./src/app/modules</code><br />
-      Then create a new file <code class="tag">page.component.ts</code>
+      First, you need to create a new folder <code class="tag">page</code> in <code class="tag">src/app/modules</code>.<br />
+      In this new folder, create a new file <code class="tag">page.component.ts</code>, and paste in the following code. Make sure to replace <code class="tag">{{ '<' }}your-custom-type-id></code> below with the API ID of your Custom Type.
     </p>
     <div class="source-code">
-      <pre><code>
+      <pre><code class="ts">// In src/app/modules/page/page.component.ts
+
 import {{ '{' }} Component, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import {{ '{' }} Context } from '../../prismic/context';
 import {{ '{' }} PrismicService } from '../../prismic/prismic.service';
@@ -92,23 +93,23 @@ export class PageComponent implements OnInit, OnDestroy {{ '{' }}
   }
 
   fetchPage(pageUID) {{ '{' }}
-    this.ctx.api.getByUID('page', pageUID, {{ '{' }}})
+    this.ctx.api.getByUID('{{ '<' }}your-custom-type-id>', pageUID, {{ '{' }}})
     .then(data => {{ '{' }}
       this.toolbar = false;
       this.pageContent = data;
     })
     .catch(e => console.log(e));
   }
-}
-      </code></pre>
+}</code></pre>
     </div>
 
     <h4>Create a new module to expose your component</h4>
     <p>
-      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.module.ts</code>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.module.ts</code>, and paste in the following code.
     </p>
     <div class="source-code">
-      <pre><code>
+      <pre><code class="ts">// In src/app/modules/page/page.module.ts
+
 import {{ '{' }} NgModule } from '@angular/core';
 import {{ '{' }} CommonModule } from '@angular/common'; // required for ngIf templating property
 import {{ '{' }} PageComponent } from './page.component';
@@ -120,16 +121,16 @@ import {{ '{' }} PrismicService } from '../../prismic/prismic.service';
   exports: [PageComponent],
   providers: [PrismicService]
 })
-export class PageModule {{ '{' }}}
-      </code></pre>
+export class PageModule {{ '{' }}}</code></pre>
     </div>
 
     <h4>Create a new template for the page component</h4>
     <p>
-      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.component.html</code>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.component.html</code>, and paste in the following code.
     </p>
     <div class="source-code">
-      <pre><code>
+      <pre><code class="ts">// In src/app/modules/page/page.component.html
+
 &lt;div *ngIf=&quot;!pageContent&quot;&gt;
   &lt;h2&gt;Loading your page content&lt;/h2&gt;
 &lt;/div&gt;
@@ -138,16 +139,16 @@ export class PageModule {{ '{' }}}
   &lt;img src=&quot;{{ '{' }}{{ '{' }}pageContent.data.image.url}}&quot; /&gt;
   &lt;div class=&quot;title&quot; [innerHTML]=&quot;PrismicDOM.RichText.asHtml(pageContent.data.title, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
   &lt;div [innerHTML]=&quot;PrismicDOM.RichText.asHtml(pageContent.data.description, ctx.linkResolver)&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-      </code></pre>
+&lt;/div&gt;</code></pre>
     </div>
 
     <h4>Create a new stylesheet for the page component</h4>
     <p>
-      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.component.css</code>
+      In the <code class="tag">page</code> folder, create a new file <code class="tag">page.component.css</code>, and paste in the following code.
     </p>
     <div class="source-code">
-      <pre><code>
+      <pre><code class="css">// In src/app/modules/page/page.component.css
+      
 .page-content {{ '{' }}
   text-align: center;
   margin-top: 50px;
@@ -162,47 +163,47 @@ export class PageModule {{ '{' }}}
   font-size: 34px;
   font-weight: bold;
   margin-bottom: 20px;
-}
-      </code></pre>
+}</code></pre>
     </div>
 
     <h4>Link that Page module to your Application</h4>
     <p>
-      In the file <code class="tag">app.module.ts</code>, import your component in your application.
+      In the file <code class="tag">src/app/app.module.ts</code>, import your component in your application as shown below.
     </p>
     <div class="source-code">
-      <pre><code>
+      <pre><code>// In src/app/app.module.ts
+
 import {{ '{' }} PageModule } from './modules/page/page.module';
 
 //in imports, add this module
-PageModule
-      </code></pre>
+PageModule</code></pre>
     </div>
 
     <h4>Add the new route</h4>
     <p>
-      In the file <code class="tag">routes.ts</code>, add the new route and link it to the Page component.
+      In the file <code class="tag">src/app/routes.ts</code>, add the new route and link it to the Page component.
+      <span class="note">Note that you will need to include a UID field in your Custom Type in order for this to work.</span>
     </p>
     <div class="source-code">
-      <pre><code>
+      <pre><code class="ts">// In src/app/routes.ts
+
 import {{ '{' }} PageComponent } from './modules/page/page.component';
 
-{{ '{' }} path: 'page/:uid', component: PageComponent},
-      </code></pre>
+{{ '{' }} path: 'page/:uid', component: PageComponent},</code></pre>
     </div>
 
     <h4>Configure your link resolver to make it work for previews and DocumentLink</h4>
     <p>
-      In the file <code class="tag">prismic-configuration.ts</code>, configure the new route based on the custom type by simply adding this code at the begining of the function linkResolver:
+      In the file <code class="tag">src/prismic-configuration.ts</code>, configure the new route based on the custom type by simply adding this code at the begining of the <code class="tag">linkResolver</code> function:
     </p>
     <div class="source-code">
-      <pre><code>
-if(doc.type === 'page') return `page/${{ '{' }}doc.uid}`;
-      </code></pre>
+      <pre><code class="ts">// In src/prismic-configuration.ts
+
+if(doc.type === 'page') return `page/${{ '{' }}doc.uid}`;</code></pre>
     </div>
 
     <h3 id="working-example"><span>3</span>Full working example</h3>
-    <p>If you want a full working example to build your new module, just go there : https://github.com/arnaudlewis/angular2-starter/tree/winner</p>
+    <p>If you want to check out a full working example, explore the files in the <a href="https://github.com/prismicio/angular2-starter/tree/apiv2-winner" target="_blank" rel="noopener">apiv2-winner branch of the github repo</a>.</p>
 
   </section>
 </div>

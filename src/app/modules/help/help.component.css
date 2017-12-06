@@ -202,7 +202,7 @@
 #prismic-help header .guide a {
     color: #516677;
     text-decoration: none;
-  	cursor: pointer;
+    cursor: pointer;
 }
 
 #prismic-help header .guide a:hover {
@@ -325,5 +325,23 @@
     box-sizing: border-box;
     width: 100%;
     padding: 20px;
-    line-height: 1.8rem
+    font-family: "Source Code Pro", monospace, serif;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+#prismic-help .note {
+    display: block;
+    margin: 20px 0;
+    font-weight: 700
+}
+
+#prismic-help .tag strong {
+    font-weight: 700;
+    color: inherit
+}
+
+#prismic-help code strong {
+    font-weight: 700;
+    color: #000
 }
