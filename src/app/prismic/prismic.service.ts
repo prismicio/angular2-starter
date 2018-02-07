@@ -1,4 +1,3 @@
-import PrismicToolbar from 'prismic-toolbar';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import Prismic from 'prismic-javascript';
@@ -50,9 +49,9 @@ export class PrismicService {
   toolbar(api) {
     const maybeCurrentExperiment = api.currentExperiment();
     if (maybeCurrentExperiment) {
-      PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+      window['PrismicToolbar'].startExperiment(maybeCurrentExperiment.googleId());
     }
-    PrismicToolbar.setup(CONFIG.apiEndpoint);
+    window['PrismicToolbar'].setup(CONFIG.apiEndpoint);
   }
 
   preview(token) {
