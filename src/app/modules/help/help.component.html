@@ -7,7 +7,7 @@
     </nav>
     <div class="wrapper"><img src="../../assets/images/rocket.svg" alt=""/>
       <h1>High five, you deserve it!</h1>
-      <p>Grab a well deserved cup of coffee, you're {{repositoryInfos.isConfigured ? 'two' : 'three'}} steps away from creating a page with dynamic content.</p>
+      <p>Grab a well deserved cup of coffee, you're {{repositoryInfos.isConfigured ? 'three' : 'four'}} steps away from creating a page with dynamic content.</p>
     </div>
     <div class="hero-curve"></div>
     <div class="flip-flap">
@@ -17,7 +17,8 @@
             <li *ngSwitchCase="true" class="done"><span>1</span>Bootstrap your project</li>
             <li *ngSwitchDefault><a href="help#config"><span>1</span>Bootstrap your project<img src="../../assets/images/arrow.svg" alt=""/></a></li>
             <li><a href="help#query"><span>2</span>Create a module and query the API<img src="../../assets/images/arrow.svg" alt=""/></a></li>
-            <li><a href="help#working-example"><span>3</span>Discover a working example<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a href="help#script"><span>3</span>Add the prismic endpoint script<img src="../../assets/images/arrow.svg" alt=""/></a></li>
+            <li><a href="help#working-example"><span>4</span>Discover a working example<img src="../../assets/images/arrow.svg" alt=""/></a></li>
           </ul>
         </div>
         <div class="gif"></div>
@@ -26,7 +27,7 @@
   </header>
   <section>
     <p>This is a help page included in your project. It has a few useful links and example code snippets to help you getting started. You can access this any time by pointing your browser to localhost:4200/help.</p>
-    <h2>{{repositoryInfos.isConfigured ? 'Two' : 'Three'}} more steps:</h2>
+    <h2>{{repositoryInfos.isConfigured ? 'Three' : 'Four'}} more steps:</h2>
 
     <div *ngIf="!repositoryInfos.isConfigured">
       <h3 id="config"><span>1</span>Bootstrap your project</h3>
@@ -202,7 +203,20 @@ import {{ '{' }} PageComponent } from './modules/page/page.component';
 if(doc.type === 'page') return `page/${{ '{' }}doc.uid}`;</code></pre>
     </div>
 
-    <h3 id="working-example"><span>3</span>Full working example</h3>
+    <h3 id="script"><span>3</span>Add the prismic endpoint script</h3>
+    <p>
+      Add the following script to ensure that the Preview and In-website Edit button features will work properly. In your <code class="tag">src/index.html</code> file, paste the following code just before the closing &lt;/head> element.
+    </p>
+    <div class="source-code">
+      <pre><code class="html">&lt;script>
+  window.prismic = {{ '{' }}
+    endpoint: 'https://&lt;your-repo-name>.prismic.io/api/v2'
+  };
+&lt;/script></code></pre>
+    </div>
+    <p>Make sure to replace <code class="tag">&lt;your-repo-name></code> with the name of your repository.</p>
+
+    <h3 id="working-example"><span>4</span>Full working example</h3>
     <p>If you want to check out a full working example, explore the files in the <a href="https://github.com/prismicio/angular2-starter/tree/apiv2-winner" target="_blank" rel="noopener">apiv2-winner branch of the github repo</a>.</p>
 
   </section>
